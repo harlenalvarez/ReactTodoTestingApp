@@ -13,3 +13,5 @@ The hybrid file uses some components of the toolkit to reduce
 the boiler plate.  The slice file is all of it combine into the slice function call.
 
 4. Inside ./components/todo-component In the TodoWrapper.tsx and Home.tsx we can see the implementation differences.
+
+`The hybrid reducer might look larger because there are two reducers to show the different ways you can combine the toolkit helper methods`
