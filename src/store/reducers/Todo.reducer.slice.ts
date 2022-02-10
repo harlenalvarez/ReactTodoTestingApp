@@ -20,9 +20,7 @@ const slice = createSlice({
     name: 'TodoSliceName',
     initialState,
     reducers:{
-        Add: (state) =>  { 
-            state.push({ isComplete: false, todo: '' }); 
-        },
+        Add: (state) =>  { state.push({ isComplete: false, todo: '' }); },
         Remove: (state, action) => { state.splice(action.payload, 1); }
     },
     extraReducers: builder => 
