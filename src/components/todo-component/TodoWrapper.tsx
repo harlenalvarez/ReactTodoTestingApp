@@ -34,27 +34,21 @@ export const TodoWrapper = () => {
   const todoList = useStoreSelector(state => state.todos);
 
   function addEmptyList(){
-    // Legacy call to dispatch where we build the action
-    // of course this can be extracted into an action creator
-    // dispatch({type: TodoAction.Add });
-
-    // Hybrid and Slice using the actions we created
+    // Legacy, Hybrid and Slice
     dispatch(TodoAction.Add());
   }
 
   function saveElementAtIndex(index: number, savedItem: TodoItemType) {
     // Legacy dispatch
-    // dispatch({ type: TodoAction.Save, payload:{ index, savedItem }});
+    //dispatch(TodoAction.Save({index, savedItem}));
 
     // Hybrid and Slice using the thunk
     dispatch(SaveTodoAsync({index, savedItem}));
   }
 
   function removeElementAtIndex(index: number) {
-    // legacy dispatch
-    // dispatch({type: TodoAction.Remove, payload: index });
 
-    // Hybrid and Slice
+    // Legacy, Hybrid and Slice
     dispatch(TodoAction.Remove(index));
   }
 
