@@ -4,6 +4,18 @@ import { Button, makeStyles, TableContainer, Paper, Table, TableHead, TableRow, 
 import { EmptyTodoList } from './EmptyTodoList';
 import { TodoItemType, TodoItem } from './TodoItem';
 
+// we bring in the custom selectors we created
+import { useStoreDispatch, useStoreSelector } from '../../store/RootStore';
+
+// Legacy action we bring in the redux action types
+//import { TodoAction } from '../../store/reducers/Todo.reducer.legacy';
+
+// Hybrid action using thunk and action creators
+// import { TodoAction, SaveTodoAsync } from '../../store/reducers/Todo.reducer.hybrid';
+
+// Slice import is identical to the hybrid approach
+import { TodoAction, SaveTodoAsync } from '../../store/reducers/Todo.reducer.slice';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -16,31 +28,37 @@ const useStyles = makeStyles((theme) => ({
 
 export const TodoWrapper = () => {
   const classes = useStyles();
-  const [ todoList, setTodoList] = useState<Array<TodoItemType>>([]);
-  let debounce: any = null;
 
-  function addEmptyList(){    
-    setTodoList([ ...todoList, { isComplete: false, todo: '' }])
-  }
+  // Basic redux using hooks
+  const dispatch = useStoreDispatch();
+  const todoList = useStoreSelector(state => state.todos);
 
-  function removeElementAtIndex(index: number) {
-    clearTimeout(debounce);
-    debounce = setTimeout(() => {
-      const newList = [ ...todoList];
-      newList.splice(index, 1);
-      setTodoList(newList);
-    }, 300);
+  function addEmptyList(){
+    // Legacy call to dispatch where we build the action
+    // of course this can be extracted into an action creator
+    // dispatch({type: TodoAction.Add });
+
+    // Hybrid and Slice using the actions we created
+    dispatch(TodoAction.Add());
   }
 
   function saveElementAtIndex(index: number, savedItem: TodoItemType) {
-    clearTimeout(debounce);
-    debounce = setTimeout(() => {
-      if(!savedItem.todo) return;
-      const newList = [ ...todoList ];
-      newList[index] = savedItem;
-      setTodoList(newList);
-    }, 300);
+    // Legacy dispatch
+    // dispatch({ type: TodoAction.Save, payload:{ index, savedItem }});
+
+    // Hybrid and Slice using the thunk
+    dispatch(SaveTodoAsync({index, savedItem}));
   }
+
+  function removeElementAtIndex(index: number) {
+    // legacy dispatch
+    // dispatch({type: TodoAction.Remove, payload: index });
+
+    // Hybrid and Slice
+    dispatch(TodoAction.Remove(index));
+  }
+
+
 
   function renderList(): JSX.Element {
     return (
