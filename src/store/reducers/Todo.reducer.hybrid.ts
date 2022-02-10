@@ -37,7 +37,7 @@ export function TodoReducerLegacy(state: TodoItemType[] = initialState, action: 
             clonedList[action.payload?.index] = action.payload?.savedItem;
             return clonedList;
 
-        // Only change here is that we want the text so we use the prop
+        // Only change here is that we want the text so we use type prop
         case TodoAction.Remove.type:
             const newList = [...state];
             newList.splice(action.payload, 1);
