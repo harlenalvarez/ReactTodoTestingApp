@@ -20,6 +20,6 @@ export type AppDispatch = typeof RootStore.dispatch;
 // Still typescript expecific, redux gives you the 
 // useDispatch and useSelector hooks, but because we need 
 // types we'll create our own hook to use.
-// (AGAIN THIS IS TYPESSCIPT SPECIFIC)
+// (ONLY FOR TYPESCRIPTZ)
 export const useStoreDispatch = () => useDispatch<AppDispatch>();
 export const useStoreSelector: TypedUseSelectorHook<RootState> = useSelector;
