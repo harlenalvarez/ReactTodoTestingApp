@@ -4,14 +4,10 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Action, SaveTodoType, initialState } from './Todo.types';
 import { TodoApi } from '../../api/todos.api';
 
-
-// This is custom to toolkit as thunks are a pain to write, but we can see here is just like any other function
-// first generic is the return type, second is the argument, the thunk api just exposes if it failed or not
 export const SaveTodoAsync = createAsyncThunk<SaveTodoType, SaveTodoType>('ThisNameDoesnotMatterAnyMore', async ({index, savedItem}, thunkApi) => {
     await TodoApi.SetTodo(index, savedItem);
     return {index, savedItem};
 });
-
 
 // This is the slice syntax, essentially it combines createAction and createReducer into a more condence method
 // The reducer, because its already an action it's added into the extra reducers portion similar to how is added using createReducer
